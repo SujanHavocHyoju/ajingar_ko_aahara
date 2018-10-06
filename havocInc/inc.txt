@@ -1,0 +1,196 @@
+# Install pip and create virtual environmentsudo
+	- sudo easy_install pip    (install pip)
+	- sudo pip install virtualenv     (install a v env)
+	- virtualenv havocInc				(create a v env)
+	- cd havocInc
+	- source bin/activate    (- to activate v env)
+	- pip freeze   (to see packages installed in v env)
+
+# Now install Django from pip
+	 pip install Django==1.10 or simply pip install Django (latest release)
+	
+# Create a new Django project
+	- django-admin.py startproject havocInc
+	
+# To sync the database in Django 
+	- python manage.py migrate
+	
+	create a super user when prompted, type yes and give username and password
+	else
+	 python manage.py createsuperuser
+	
+	you will see a db.sqlite3 file in your Django project havocInc
+	
+# To run the local development server
+	In your root project - type
+	- python manage.py runserver
+	
+	go to the IP address shown.
+	http://127.0.0.1:8000/
+	http://127.0.0.1:8000/admin
+	
+	
+# For Windows Users
+	go to https://www.pythonanywhere.com/pricing/
+	create a Begineer Account
+	**LATER**
+
+# Create a Django App in the root folder
+	- python manage.py startapp profiles
+	
+# Create projects first model to hold apps database
+	In sublime - src/profiles/models.py
+	
+# Tweek Django settings from src/havocInc/settings.py
+	ln 26: set DEBUG = False when the site is live,  True only on local
+	ln 28: ALLOWED_HOSTS = [] - when site is live, this will be set to my domain name
+	ln 33: INSTALLED_APPS - add your apps here eg: profiles
+	
+	Now migrate the profiles app model to your database (for evevrytime a model is created/modified)
+		- python manage.py makemigrations
+		- python manage.py migrate
+	
+# Run local developmemnt server now
+
+# HOW Django URLs work - In src/havocInc/urls.py  (url patterns are defined here)
+
+# Details about admin on - https://docs.djangoproject.com/en/2.1/ref/contrib/admin/
+	To manage the profiles model through admin
+		In src/profiles/admin.py
+
+# To add more model fields, 
+	view examples in src/profiles/models.py
+
+# Make a new home page
+	in urls.py
+	add your home page url which is related to views.py
+	make a template folder as \src\profiles\templates
+
+
+# Managing Static files
+	on - https://docs.djangoproject.com/en/2.1/howto/static-files/
+	Add 3 folders in static dir - {static, static-only, media }
+	open settings.py
+	below line 121: STATIC_URL see changes
+	open url.py to set the static url
+	- python manage.py collectstatic
+	run server and go to /admin
+
+# Add Css files in tatic\static\css as main.css
+	import this in home.html
+	collectstatic and run server
+
+# apply bootstrap - save js and css files locally, import them in your base.html, collectstatic files and runserver
+	get example form: https://getbootstrap.com/docs/3.3/examples/theme/   from page source
+
+# jumbotron blocks and styles block -  jumbotrom only as block to show in home page
+
+# Navbar settings : 
+	{% url 'home' as home %}
+    {% url 'about' as about %}
+    <li {% if request.path == home %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
+    <li {% if request.path == about %} class="active" {% endif %}><a href="{% url 'about' %}">About</a></li>
+
+# contact page
+	we have to make a new app
+	In src folder
+		- python manage.py startapp contact
+	In havocinc/src/havocinc settings.py -  add the app contact to INSTALLED_APPS list
+	In urls.py import contact and make url link for contact as contact/
+		from profiles import views as profiles_views
+		from contact import views as contact_views
+	Inside Contact we have to make its view. in views.py
+		def contact(request):
+		context = locals()
+		template = 'contact.html'
+		return render(request,template,context)	
+	Create a template folder in src/contact and create a contact.html page
+		also make necessary adjustments in navbar.html
+		collectstatic files and run server
+	Make a contact form
+		go to the following Django project link - https://docs.djangoproject.com/en/1.10/ref/forms/fields/
+		Open/Create a new file forms.py as -> src/contact/forms.py
+		Make a form class
+			class contactForm(forms.Form):
+			name = forms.CharField(required=False, max_length=100, help_text='100 Characters max.')
+			email = forms.EmailField(required=True)
+			comment = forms.CharField(required=True)
+		Add a textarea widget from : https://docs.djangoproject.com/en/1.10/ref/forms/widgets/
+			comment = forms.CharField(required=True, widget=forms.Textarea)
+		In Contact - views.py - Contact form needs to be importe into the view
+			from .forms import contactForm
+		Next: the view needs to handle the contact form
+			Add below the def in views.py
+				form = contactForm(request.POST or None)
+				if form.is_valid():
+				print request.POST
+		In contact.html
+			<form method="POST" action=""> {% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" value="Submit Form" class="btn btn-default"/>
+			</form>
+		Run server and submit form - in terminal u can see the submitted data info with csrf token
+		In views.py
+			add : print form.cleaned_data['email'] to get email value in terminal
+
+# sending email from contact page
+	In settings.py we have to enter setting values for email host, port etc
+		EMAIL_HOST = 'smtp.gmail.com'
+		EMAIL_HOST_USER = 'sujan.hyoju@gmail.com'
+		EMAIL_HOST_PASSWORD = '********'
+		EMAIL_PORT = '587'
+		EMALI_USE_TLS = True
+	In contact - views.py use the quick example code from : https://docs.djangoproject.com/en/1.10/topics/email/
+		from django.core.mail import send_mail
+
+		send_mail(
+		    'Subject here',
+		    'Here is the message.',
+		    'from@example.com',
+		    ['to@example.com'],
+		    fail_silently=False,
+		)
+
+		This view needs access to email settings: add this in views.py= from django.core.mail import send_mail
+		(1:37:48)
+		Add Confirmation for form submission
+		Use Dictionary (key, value) variables to display in contect
+		Make another context
+
+# Django crispy forms to make the form better
+	django-crispy-forms.readthedocs.io/en/latest/ 
+	Go to installation link and take : pip install --upgrade django-crispy-forms
+	run this command in your terminal
+	Go to Settings.py
+		add crispy_forms inside INSTALLED_APPS
+		add this in the bottom of settings.py - CRISPY_TEMPLATE_PACK = 'bootstrap3'
+		paste - {% load crispy_forms_tags %} in contact.html
+		use crispy tags in forms - replace {{ form.as_p }} with {{ form|crispy }}
+		make css setting - col -xs/md/sm div classes
+		
+(1:54:00 or 15)
+# User Auth
+	Installation: Go to the url for Django authentication documentation : https://django-allauth.readthedocs.io/en/latest/
+	- From Installation Panel - run command -> sudo pip install django-allauth
+		once installed - run the server
+			-> python manage.py runserver
+
+	In settings.py 
+		Make sure you have django.template.context_processors.request in your TEMPLATES section
+		Copy the AUTHENTICATION_BACKENDS portion into your settings.py (do not forget to remove the ... elipsis)
+		Copy these lines into INSTALLED_APPS section
+			'django.contrib.sites',
+    		'allauth',
+    		'allauth.account',
+    		'allauth.socialaccount',
+    	Paste this to the bottom -> SITE_ID = 1
+
+    In urls.py
+    	Copy this line in urlpatterns section -> url(r'^accounts/', include('allauth.urls')),
+    	also add ', include' in from django.conf.urls import url, include 
+
+    Run migration
+
+    
+
+
