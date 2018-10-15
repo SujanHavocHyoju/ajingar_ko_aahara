@@ -1,1 +1,4 @@
 https://kirr.co/8mjnna
+
+.\Scripts\activate
+
