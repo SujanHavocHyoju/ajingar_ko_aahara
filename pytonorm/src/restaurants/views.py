@@ -22,7 +22,7 @@ class HomeView(TemplateView):
 					"num":num,
 					"some_list":some_list
 					}
-		print(context)
+		#print(context)
 		return context
 
 class ContactView(TemplateView):

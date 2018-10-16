@@ -22,4 +22,13 @@ eg: In views.py
 
 	In urls.py
 	url(r'^contact/$', ContactView.as_view()),
+also see Template views
+
+
+Remembering Things
+	Create your Restaurant Model in models.py inside restaurants app
+	and add 'restaurants' app in base.py -> INSTALLED_APPS
+	then register your model in restaurants --> admin.py
+		-> from .models import Restaurant
+		-> admin.site.regiter(Restaurant)
 
