@@ -2,11 +2,10 @@
 <html lang="en">
     <head>
         <title>{% block head_title %}HAVOC INC. PYTONORM {% endblock head_title%}</title>
+        {% include 'snippets/css.html' %}
     </head>
     <body>
-    	<a href="/">Home</a>
-    	<a href="/about">About</a>
-    	<a href="/contact">Contact</a>
+    	{% include 'snippets/nav.html' %}
         <div class="container">
         	<p> FROM BASE.HTML </p>
         	{% block content %}
@@ -17,5 +16,6 @@
         		NextContent
         	{% endblock content2 %}
         </div>
+        {% include 'snippets/js.html' %}
     </body>
 </html>
