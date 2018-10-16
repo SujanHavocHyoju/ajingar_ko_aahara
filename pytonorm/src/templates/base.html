@@ -4,23 +4,18 @@
         <title>HAVOC INC. PYTONORM</title>
     </head>
     <body>
-        <h1> PYTONORM HAVOC INC</h1>
-        <p>DASHAIN PO HO KI YO MERO DASHA</p>
-        <p> contect variable: {{ html_var }} and Boolean : {{ boolean_value }}</p>
-        <p> contect variable: <code> {% verbatim %}{{ html_var }} {% endverbatim %} and Boolean : {% verbatim %}{{ boolean_value }} {% endverbatim %}</code></p>
-        {% if boolean_value %}
-        <p> : {{ result }} :</p>
-        {% endif %}
+    	<a href="/">Home</a>
+    	<a href="/about">About</a>
+    	<a href="/contact">Contact</a>
+        <div class="container">
+        	<p> FROM BASE.HTML </p>
+        	{% block content %}
+        		Super Content
+        	{% endblock content %}
 
-        <p> For Loop example</p>
-        {% for some_list_item in some_list%}
-        	{% if some_list_item|divisibleby:"2" %}
-        		Even Number
-        	{% else %}
-        		Odd Number
-        	{% endif %}
-        	{{ some_list_item }} <br/>
-        	
-        {% endfor %}
+        	{% block content2 %}
+        		NextContent
+        	{% endblock content2 %}
+        </div>
     </body>
 </html>

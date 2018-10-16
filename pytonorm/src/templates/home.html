@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+    {% block content %}
+    {{ block.super }}
+        <h1> PYTONORM HAVOC INC</h1>
+        <p>DASHAIN PO HO KI YO MERO DASHA</p>
+        <p> contect variable: {{ html_var }} and Boolean : {{ boolean_value }}</p>
+        <p> contect variable: <code> {% verbatim %}{{ html_var }} {% endverbatim %} and Boolean : {% verbatim %}{{ boolean_value }} {% endverbatim %}</code></p>
+        <h1> {{ block.super }}</h1>
+        {% if boolean_value %}
+        <p> : {{ result }} :</p>
+        {% endif %}
+
+        <p> For Loop example</p>
+        {% for some_list_item in some_list%}
+        	{% if some_list_item|divisibleby:"2" %}
+        		Even Number
+        	{% else %}
+        		Odd Number
+        	{% endif %}
+        	{{ some_list_item }} <br/>
+        	
+        {% endfor %}
+    {% endblock content %}
