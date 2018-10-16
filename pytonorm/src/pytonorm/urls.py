@@ -15,12 +15,22 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.views.generic.base import TemplateView
 
-from restaurants.views import home, about, contact
+#from restaurants.views import home, about, contact, ContactView
+
+from restaurants.views import HomeView, AboutView, ContactView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', home),
-    url(r'^about/$', about),
-    url(r'^contact/$', contact),
+    #url(r'^$', home),
+    url(r'^$', HomeView.as_view()),
+    #url(r'^$', TemplateView.as_view(template_name='home.html')),
+    #url(r'^about/$', about),
+    url(r'^about/$', AboutView.as_view()),
+    #url(r'^about/$', TemplateView.as_view(template_name='about.html')),  //Use only If you do not have any contexxt to show
+    #url(r'^contact/$', contact),
+    url(r'^contact/$', ContactView.as_view()),
+    #url(r'^contact/$', TemplateView.as_view(template_name='contact.html')),  //Use only If you do not have any contexxt to show
+    #url(r'^contact/(?P<id>\d+)/$', ContactView.as_view()),
 ]

@@ -1,4 +1,25 @@
 https://kirr.co/8mjnna
 
+Install Python & Django on Windows: https://www.codingforentrepreneurs.com/blog/install-python-django-on-windows/
+PowerShell: 
 .\Scripts\activate
+
+
+Create Templates --> add Templates dir to base.py --> define views for templates in views.py --> urls slugs in urls.py for the views
+
+re-activate virtual env --> source ../bin/avtivate   or  .\Scripts\activate {for multiple terminal windows}
+to deactivate --> deactivate
+
+
+class-based views API
+https://docs.djangoproject.com/en/2.1/ref/class-based-views/
+
+eg: In views.py
+ class ContactView(View):
+	def get(self, request, *args, **kwargs):    /post /put
+		context = {}
+		return render(request, "contact.html", context) 
+
+	In urls.py
+	url(r'^contact/$', ContactView.as_view()),
 
