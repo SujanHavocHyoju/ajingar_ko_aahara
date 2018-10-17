@@ -32,3 +32,62 @@ Remembering Things
 		-> from .models import Restaurant
 		-> admin.site.regiter(Restaurant)
 
+Displaying Saved Data
+eg: using Functional View in views.py
+	def restaurant_listview(request):
+	template_name = 'restaurants/restaurant_list.html'
+	queryset = RestaurantLocation.objects.all()
+	context = {
+		"object_list" : queryset
+	}
+	return render(request, template_name, context)
+
+	Urls.py -> url(r'^restaurants/$', restaurant_listview)
+
+	In restaurants app make files - templates\restaurants\restaurant_list.html
+	listing data: <li> {{ obj }}<br/> {{ obj.location }}, {{ obj.description }}, {{ obj.added_date }}, {{ obj.updated_date }}</li>
+
+
+Using Python Shell for QuerySet API examples
+https://docs.djangoproject.com/en/2.1/ref/models/querysets/
+-> python or -> python manage.py shell
+
+	Geting Data from queryset
+	--> from restaurants.models import RestaurantLocation
+	--> RestaurantLocation.objects.all()
+	--> for obj in RestaurantLocation.objects.all():
+	...     print(obj.name)
+
+	Filtering in queryset
+	--> qs = RestaurantLocation.objects.all()
+	>>> qs.filter(category__iexact="Newari cuisine")
+
+	QuerySet exists? 
+	->qs.existe()
+
+	QuerySet count
+	-> qs.count()
+
+	Updating objects in a queryset
+	--> qs.update(category='Food')
+	2
+
+	Adding a record
+	-> obj = RestaurantLocation()
+	-> obj.name="Tribeni Khaja Ghar"
+	-> obj.location = "Karunamarga-5, Banepa"
+	-> obj.description = "Khaja Ghar, Hotel and Bhatti"
+	-> obj.category = 'Newari Khaja Ghar'
+	-> obj.save()
+
+******BUT WE USE
+			obj = RestaurantLocation.objects.create(name='xx',location='xx..', ...)
+
+	Combined Filter
+			-> qs = RestaurantLocation.objects.all()
+			-> qs2 = RestaurantLocation.objects.filter(category__iexact='Newari Cuisine')
+			-> qs.existe()
+			-> qs2.count()
+	->qs = RestaurantLocation.objects.filter(category__iexact='Newari Cuisine').exclude(name__icontains='Cafe')
+
+
