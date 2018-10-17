@@ -4,7 +4,18 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic.base import TemplateView
 
+from .models import RestaurantLocation
+
 # Create your views here.
+
+# Restaurant list view 
+def restaurant_listview(request):
+	template_name = 'restaurants/restaurant_list.html'
+	queryset = RestaurantLocation.objects.all()
+	context = {
+		"object_list" : queryset
+	}
+	return render(request, template_name, context)
 
 
 # Template Based Views
@@ -16,11 +27,6 @@ class HomeView(TemplateView):
 		num = random.randint(0,100000)
 		some_list = [num, random.randint(0,100000), random.randint(0,100000), random.randint(0,100000)]
 		context = {
-					"html_var":"context variable", 
-					"boolean_value" : True, 
-					"result":"You can pass!", 
-					"num":num,
-					"some_list":some_list
 					}
 		#print(context)
 		return context
