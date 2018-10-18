@@ -96,3 +96,19 @@ https://docs.djangoproject.com/en/2.1/ref/class-based-views/generic-display/#lis
 add/import ListView in views.py
 	make class based views for restaurants, newari, bakery
 	add them in urls.py
+
+	url slugs:
+		url(r'^restaurants/(?P<slug>\w+)/$', SearchRestaurantListView.as_view()),
+	class based implementation
+		class SearchRestaurantListView(ListView):
+		template_name = 'restaurants/restaurant_list.html'
+
+		def get_queryset(self):
+			print(self.kwargs)
+			slug = self.kwargs.get("slug")
+			if slug:
+				queryset = RestaurantLocation.objects.filter(category__icontains=slug)
+			else:
+				queryset = RestaurantLocation.objects.all()
+			return queryset 
+

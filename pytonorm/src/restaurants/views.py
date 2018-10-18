@@ -1,4 +1,5 @@
 import random
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
@@ -22,14 +23,26 @@ class RestaurantListView(ListView):
 	queryset = RestaurantLocation.objects.all()
 	template_name = 'restaurants/restaurant_list.html'
 
-class NewariRestaurantListView(ListView):
-	queryset = RestaurantLocation.objects.filter(category__icontains='Newari')
-	#queryset = RestaurantLocation.objects.filter(category__iexact='Newari')
+class SearchRestaurantListView(ListView):
 	template_name = 'restaurants/restaurant_list.html'
 
-class BakeryRestaurantListView(ListView):
-	queryset = RestaurantLocation.objects.filter(category__icontains='Bakery')
-	template_name = 'restaurants/restaurant_list.html'
+	def get_queryset(self):
+		print(self.kwargs)
+		slug = self.kwargs.get("slug")
+		if slug:
+			queryset = RestaurantLocation.objects.filter(category__icontains=slug)
+		else:
+			queryset = RestaurantLocation.objects.all()
+		return queryset 
+
+# class NewariRestaurantListView(ListView):
+# 	queryset = RestaurantLocation.objects.filter(category__icontains='Newari')
+# 	#queryset = RestaurantLocation.objects.filter(category__iexact='Newari')
+# 	template_name = 'restaurants/restaurant_list.html'
+
+# class BakeryRestaurantListView(ListView):
+# 	queryset = RestaurantLocation.objects.filter(category__icontains='Bakery')
+# 	template_name = 'restaurants/restaurant_list.html'
 
 # Template Based Views
 class HomeView(TemplateView):

@@ -22,9 +22,9 @@ from restaurants.views import(
 	AboutView, 
 	ContactView,
 	RestaurantListView,
-	NewariRestaurantListView,
-	BakeryRestaurantListView,
-
+	#NewariRestaurantListView,
+	#BakeryRestaurantListView,
+	SearchRestaurantListView,
 	)
 
 #from restaurants.views import home, about, contact, ContactView
@@ -44,6 +44,7 @@ urlpatterns = [
     #url(r'^contact/$', TemplateView.as_view(template_name='contact.html')),  //Use only If you do not have any contexxt to show
     #url(r'^contact/(?P<id>\d+)/$', ContactView.as_view()),
     url(r'^restaurants/$', RestaurantListView.as_view()),
-    url(r'^restaurants/bakery/$', BakeryRestaurantListView.as_view()),
-    url(r'^restaurants/newari/$', NewariRestaurantListView.as_view())
+    #url(r'^restaurants/bakery/$', BakeryRestaurantListView.as_view()),
+    #url(r'^restaurants/newari/$', NewariRestaurantListView.as_view())
+    url(r'^restaurants/(?P<slug>\w+)/$', SearchRestaurantListView.as_view()),
 ]
