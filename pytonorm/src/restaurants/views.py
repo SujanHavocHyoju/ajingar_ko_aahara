@@ -30,9 +30,13 @@ class SearchRestaurantListView(ListView):
 		print(self.kwargs)
 		slug = self.kwargs.get("slug")
 		if slug:
-			queryset = RestaurantLocation.objects.filter(category__icontains=slug)
+			#queryset = RestaurantLocation.objects.filter(category__icontains=slug)
+			queryset = RestaurantLocation.objects.filter(
+					Q(category__iexact=slug) |
+					Q(category__icontains=slug) 
+				)
 		else:
-			queryset = RestaurantLocation.objects.all()
+			queryset = RestaurantLocation.objects.none()
 		return queryset 
 
 # class NewariRestaurantListView(ListView):

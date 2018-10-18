@@ -112,3 +112,10 @@ add/import ListView in views.py
 				queryset = RestaurantLocation.objects.all()
 			return queryset 
 
+	Q lookups - In views.py
+		from django.db.models import Q
+		queryset = RestaurantLocation.objects.filter(
+					Q(category__iexact=slug) |
+					Q(category__icontains=slug) 
+				)
+
