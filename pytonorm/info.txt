@@ -91,3 +91,8 @@ https://docs.djangoproject.com/en/2.1/ref/models/querysets/
 	->qs = RestaurantLocation.objects.filter(category__iexact='Newari Cuisine').exclude(name__icontains='Cafe')
 
 
+Generic List View
+https://docs.djangoproject.com/en/2.1/ref/class-based-views/generic-display/#listview
+add/import ListView in views.py
+	make class based views for restaurants, newari, bakery
+	add them in urls.py

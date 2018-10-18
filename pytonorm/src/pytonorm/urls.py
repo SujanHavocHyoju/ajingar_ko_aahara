@@ -17,9 +17,19 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 
+from restaurants.views import(
+	HomeView, 
+	AboutView, 
+	ContactView,
+	RestaurantListView,
+	NewariRestaurantListView,
+	BakeryRestaurantListView,
+
+	)
+
 #from restaurants.views import home, about, contact, ContactView
 
-from restaurants.views import HomeView, AboutView, ContactView, restaurant_listview
+#from restaurants.views import HomeView, AboutView, ContactView, restaurant_listview
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -33,5 +43,7 @@ urlpatterns = [
     url(r'^contact/$', ContactView.as_view()),
     #url(r'^contact/$', TemplateView.as_view(template_name='contact.html')),  //Use only If you do not have any contexxt to show
     #url(r'^contact/(?P<id>\d+)/$', ContactView.as_view()),
-    url(r'^restaurants/$', restaurant_listview)
+    url(r'^restaurants/$', RestaurantListView.as_view()),
+    url(r'^restaurants/bakery/$', BakeryRestaurantListView.as_view()),
+    url(r'^restaurants/newari/$', NewariRestaurantListView.as_view())
 ]
