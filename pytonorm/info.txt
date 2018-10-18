@@ -119,3 +119,5 @@ add/import ListView in views.py
 					Q(category__icontains=slug) 
 				)
 
+Change filename of restaurant_list.html to restaurantlocation_list.html
+	remove template from the view class-- gives error --use default template name ie restaurantlocation_list.html
