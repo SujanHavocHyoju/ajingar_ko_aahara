@@ -127,4 +127,25 @@ Restaurant Profile Detail - Make view page for each results
 	Import RestaurantDetailView in urls.py
 		add url pattern of search by id instead of search by slug
 		    url(r'^restaurants/(?P<pk>\w+)/$', RestaurantDetailView.as_view()),
-		    These are regular expressions --> 
+		    These are regular expressions --> https://www.codingforentrepreneurs.com/blog/common-regular-expressions-for-django-urls/
+
+		    In views.py, create this class
+		    class RestaurantDetailView(DetailView):
+			queryset = RestaurantLocation.objects.all()
+			
+			def get_context_data(self, *args, **kwargs):
+				print(self.kwargs)
+				context = super(RestaurantDetailView, self).get_context_data(*args, **kwargs)
+				print(context)
+				return context
+
+			Make a template --> restaurantlocation_detail.html
+
+	using any other parameter as a slug -> eg: rest_id
+		new class def -> def get_object(-,-,-):
+		from django.shortcuts import render, get_object_or_404
+
+		def get_object(self, *args, **kwargs):
+		rest_id = self.kwargs.get('rest_id')
+		obj = get_object_or_404(RestaurantLocation, id=rest_id)  #or pk = rest_id
+		return obj

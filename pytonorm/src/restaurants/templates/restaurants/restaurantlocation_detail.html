@@ -5,8 +5,9 @@
 	<p>{{ object.location }}</p>
 	<p>Added on: {{ object.added_date }}, Updated {{ object.updated_date | timesince }} ago</p>
 	<text> {{ object.description }}</text>
+	
+	<!--For list outputs  - object we get is always object_list vs that we get for a single object i.e object -->
 	<!-- 
-	For list outputs 
 	{% for obj in object_list %}
 		<li> {{ obj }}<br/> {{ obj.location }}, {{ obj.description }}, {{ obj.category }}, {{ obj.added_date }}, {{ obj.updated_date }}</li>
 	{% endfor %} 
