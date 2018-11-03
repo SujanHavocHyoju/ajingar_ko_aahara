@@ -149,3 +149,24 @@ Restaurant Profile Detail - Make view page for each results
 		rest_id = self.kwargs.get('rest_id')
 		obj = get_object_or_404(RestaurantLocation, id=rest_id)  #or pk = rest_id
 		return obj
+
+
+
+SlugField and Unique Slug Generator
+ --> https://www.codingforentrepreneurs.com/blog/a-unique-slug-generator-for-django/
+ in models.py create a new SlugField
+ 	slug = models.SlugField(unique=True) --gives a prompt so first use 	slug = models.SlugField(null=True, blank=True)
+ 	create utils.py and paste code from above file
+ 		get random string generator from --> http://joincfe.com/blog/random-string-generator-in-python  link in above copied code
+ 		make migrations and migrate
+
+ 		in python shell
+ 		>>> from restaurants.models import RestaurantLocation
+		>>> obj = RestaurantLocation.objects.get(id=1)
+		>>> obt.title
+		>>> obj.name
+		>>> from restaurants.utils import unique_slug_generator
+		>>> print(unique_slug_generator)
+		<function unique_slug_generator at 0x0000021426470BF8>
+		>>> print(unique_slug_generator(obj))
+

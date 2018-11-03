@@ -8,7 +8,13 @@ class RestaurantLocation(models.Model):
 	category = models.CharField(max_length=120, null=True, blank=True)
 	added_date = models.DateTimeField(auto_now_add=True)
 	updated_date = models.DateTimeField(auto_now=True)
+	slug = models.SlugField(null=True, blank=True)
 	#my_date = models.DateTimeField(auto_now=False, auto_now_add=False)
 
 	def __str__(self):
 		return self.name
+
+	@property
+	def title(self):
+		return self.name
+	
