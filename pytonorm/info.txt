@@ -162,7 +162,7 @@ SlugField and Unique Slug Generator
  		add a property in models.py 
 		 	@property
 			def title(self):
-			return self.name
+				return self.name
  		
  		{{ object.name }} and {{ object.title }}  would point to the same name value
 
@@ -177,4 +177,26 @@ SlugField and Unique Slug Generator
 		>>> print(unique_slug_generator)
 		<function unique_slug_generator at 0x0000021426470BF8>
 		>>> print(unique_slug_generator(obj))
+
+Signals for Unique Slugs --> refer to : https://docs.djangoproject.com/en/2.1/topics/signals/
+	In models.py
+		from django.db.models.signals import pre_save, post_save
+		Make a couple of receiver functions like 
+			def rl_pre_save_receiver(sender, instance, *args, **kwargs):
+				print("Saving...")
+				print(instance.updated_date)
+
+		    similar for rl_post_save_receiver
+
+		    connect to pre_save and post save
+			    pre_save.connect(rl_pre_save_receiver, sender=RestaurantLocation)
+			    post_save.connect(rl_post_save_receiver, sender=RestaurantLocation)
+
+			Import -> from .utils import unique_slug_generator
+			
+			    def rl_pre_save_receiver(sender, instance, *args, **kwargs):
+					if not instance.slug:
+						instance.slug = unique_slug_generator(instance)
+
+
 
