@@ -7,7 +7,7 @@ PowerShell:
 
 Create Templates --> add Templates dir to base.py --> define views for templates in views.py --> urls slugs in urls.py for the views
 
-re-activate virtual env --> source ../bin/avtivate   or  .\Scripts\activate {for multiple terminal windows}
+re-activate virtual env --> source ../bin/activate   or  .\Scripts\activate {for multiple terminal windows}
 to deactivate --> deactivate
 
 
@@ -121,3 +121,10 @@ add/import ListView in views.py
 
 Change filename of restaurant_list.html to restaurantlocation_list.html
 	remove template from the view class-- gives error --use default template name ie restaurantlocation_list.html
+
+Restaurant Profile Detail - Make view page for each results
+	Import DetailView in restaurants/views.py
+	Import RestaurantDetailView in urls.py
+		add url pattern of search by id instead of search by slug
+		    url(r'^restaurants/(?P<pk>\w+)/$', RestaurantDetailView.as_view()),
+		    These are regular expressions --> 
