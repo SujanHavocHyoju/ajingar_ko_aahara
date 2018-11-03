@@ -158,6 +158,14 @@ SlugField and Unique Slug Generator
  	slug = models.SlugField(unique=True) --gives a prompt so first use 	slug = models.SlugField(null=True, blank=True)
  	create utils.py and paste code from above file
  		get random string generator from --> http://joincfe.com/blog/random-string-generator-in-python  link in above copied code
+ 		
+ 		add a property in models.py 
+		 	@property
+			def title(self):
+			return self.name
+ 		
+ 		{{ object.name }} and {{ object.title }}  would point to the same name value
+
  		make migrations and migrate
 
  		in python shell
