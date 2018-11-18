@@ -3,6 +3,7 @@
 {% block content %}
 	<h1>Restaurant List</h1>
 	{% for obj in object_list %}
-		<li> {{ obj }}<br/> {{ obj.location }}, {{ obj.description }}, {{ obj.category }}, {{ obj.added_date }}, {{ obj.updated_date }}</li>
+		<li><a href='/restaurants/{{ obj.slug }}/'>{{ obj }}</a><br/>
+		 {{ obj.location }}, {{ obj.description }}, {{ obj.category }}, {{ obj.added_date }}, {{ obj.updated_date }}</li>
 	{% endfor %}
 {% endblock content %}

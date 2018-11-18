@@ -47,7 +47,8 @@ urlpatterns = [
     url(r'^restaurants/$', RestaurantListView.as_view()),
     #url(r'^restaurants/(?P<slug>\w+)/$', RestaurantListView.as_view()),
     #url(r'^restaurants/(?P<pk>\w+)/$', RestaurantDetailView.as_view()),
-    url(r'^restaurants/(?P<rest_id>\w+)/$', RestaurantDetailView.as_view()),
+    #url(r'^restaurants/(?P<rest_id>\w+)/$', RestaurantDetailView.as_view()),
+    url(r'^restaurants/(?P<slug>[\w-]+)/$', RestaurantDetailView.as_view()),
     #url(r'^restaurants/bakery/$', BakeryRestaurantListView.as_view()),
     #url(r'^restaurants/newari/$', NewariRestaurantListView.as_view())
     #url(r'^restaurants/(?P<slug>\w+)/$', SearchRestaurantListView.as_view()),

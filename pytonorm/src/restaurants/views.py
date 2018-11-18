@@ -9,14 +9,14 @@ from .models import RestaurantLocation
 
 # Create your views here.
 
-# Restaurant list view 
-# def restaurant_listview(request):
-# 	template_name = 'restaurants/restaurant_list.html'
-# 	queryset = RestaurantLocation.objects.all()
-# 	context = {
-# 		"object_list" : queryset
-# 	}
-# 	return render(request, template_name, context)
+#Restaurant list view 
+def restaurant_listview(request):
+	template_name = 'restaurants/restaurant_list.html'
+	queryset = RestaurantLocation.objects.all()
+	context = {
+		"object_list" : queryset
+	}
+	return render(request, template_name, context)
 
 #ListView QuerySet
 class RestaurantListView(ListView):
@@ -38,16 +38,16 @@ class RestaurantListView(ListView):
 class RestaurantDetailView(DetailView):
 	queryset = RestaurantLocation.objects.all()
 	
-	def get_context_data(self, *args, **kwargs):
-		print(self.kwargs)
-		context = super(RestaurantDetailView, self).get_context_data(*args, **kwargs)
-		print(context)
-		return context
+	# def get_context_data(self, *args, **kwargs):
+	# 	print(self.kwargs)
+	# 	context = super(RestaurantDetailView, self).get_context_data(*args, **kwargs)
+	# 	print(context)
+	# 	return context
 
-	def get_object(self, *args, **kwargs):
-		rest_id = self.kwargs.get('rest_id')
-		obj = get_object_or_404(RestaurantLocation, id=rest_id)  #or pk = rest_id
-		return obj
+	# def get_object(self, *args, **kwargs):
+	# 	rest_id = self.kwargs.get('rest_id')
+	# 	obj = get_object_or_404(RestaurantLocation, id=rest_id)  #or pk = rest_id
+	# 	return obj
 
 
 # class SearchRestaurantListView(ListView):

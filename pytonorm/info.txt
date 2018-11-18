@@ -25,14 +25,14 @@ eg: In views.py
 also see Template views
 
 
-Remembering Things
+14. Remembering Things
 	Create your Restaurant Model in models.py inside restaurants app
 	and add 'restaurants' app in base.py -> INSTALLED_APPS
 	then register your model in restaurants --> admin.py
 		-> from .models import Restaurant
 		-> admin.site.regiter(Restaurant)
 
-Displaying Saved Data
+16. Displaying Saved Data
 eg: using Functional View in views.py
 	def restaurant_listview(request):
 	template_name = 'restaurants/restaurant_list.html'
@@ -48,7 +48,7 @@ eg: using Functional View in views.py
 	listing data: <li> {{ obj }}<br/> {{ obj.location }}, {{ obj.description }}, {{ obj.added_date }}, {{ obj.updated_date }}</li>
 
 
-Using Python Shell for QuerySet API examples
+17. Using Python Shell for QuerySet API examples
 https://docs.djangoproject.com/en/2.1/ref/models/querysets/
 -> python or -> python manage.py shell
 
@@ -91,7 +91,7 @@ https://docs.djangoproject.com/en/2.1/ref/models/querysets/
 	->qs = RestaurantLocation.objects.filter(category__iexact='Newari Cuisine').exclude(name__icontains='Cafe')
 
 
-Generic List View
+18. Generic List View
 https://docs.djangoproject.com/en/2.1/ref/class-based-views/generic-display/#listview
 add/import ListView in views.py
 	make class based views for restaurants, newari, bakery
@@ -122,7 +122,7 @@ add/import ListView in views.py
 Change filename of restaurant_list.html to restaurantlocation_list.html
 	remove template from the view class-- gives error --use default template name ie restaurantlocation_list.html
 
-Restaurant Profile Detail - Make view page for each results
+19. Restaurant Profile Detail - Make view page for each results
 	Import DetailView in restaurants/views.py
 	Import RestaurantDetailView in urls.py
 		add url pattern of search by id instead of search by slug
@@ -152,7 +152,7 @@ Restaurant Profile Detail - Make view page for each results
 
 
 
-SlugField and Unique Slug Generator
+20. SlugField and Unique Slug Generator
  --> https://www.codingforentrepreneurs.com/blog/a-unique-slug-generator-for-django/
  in models.py create a new SlugField
  	slug = models.SlugField(unique=True) --gives a prompt so first use 	slug = models.SlugField(null=True, blank=True)
@@ -178,7 +178,7 @@ SlugField and Unique Slug Generator
 		<function unique_slug_generator at 0x0000021426470BF8>
 		>>> print(unique_slug_generator(obj))
 
-Signals for Unique Slugs --> refer to : https://docs.djangoproject.com/en/2.1/topics/signals/
+21. Signals for Unique Slugs --> refer to : https://docs.djangoproject.com/en/2.1/topics/signals/
 	In models.py
 		from django.db.models.signals import pre_save, post_save
 		Make a couple of receiver functions like 
@@ -200,3 +200,12 @@ Signals for Unique Slugs --> refer to : https://docs.djangoproject.com/en/2.1/to
 
 
 
+22. Slugs as URL params
+	in urls.py
+		re_path(r'^article/(?P<slug>[\w-]+)/$', ....
+	in views.py
+		comment out def get_context_data and def get_object
+	in restaurantlocation_list.html add
+		<li><a href='/restaurants/{{ obj.slug }}/'>{{ obj }}</a><br/>
+
+23. Get Single Items from the DB
