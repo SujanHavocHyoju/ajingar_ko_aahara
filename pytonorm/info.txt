@@ -209,3 +209,55 @@ Change filename of restaurant_list.html to restaurantlocation_list.html
 		<li><a href='/restaurants/{{ obj.slug }}/'>{{ obj }}</a><br/>
 
 23. Get Single Items from the DB
+	use python shell: python .\manage.py shell
+		>>>from restaurants.models import RestaurantLocation
+		>>>qs = RestaurantLocation.objects.all()
+		>>>qs  //gives list of items  = <QuerySet [<RestaurantLocation: Jhigu Mo:Mo and Restaurants>, <RestaurantLocation: Mr. Bake 									Cafe>, <RestaurantLocation: Tribeni Khaja Ghar>, <RestaurantLocation: Chi Chi Grills>, <										RestaurantLocation: Honacha Newari Khaja Ghar>]>
+		
+		>>>qs.first()  //gives first object from the list
+		>>>qs.last() 	//last
+		>>>qs[2]		//index
+
+		//Using filtes as we had done earlier using slugs
+		>>>qs = RestaurantLocation.objects.filter(category__iexact='Bakery and Cafe')
+		>>>qs   //gives output <QuerySet [<RestaurantLocation: Mr. Bake Cafe>]>
+
+		//Get Call
+		>>> RestaurantLocation.objects.get(pk=1)
+				= <RestaurantLocation: Jhigu Mo:Mo and Restaurants>
+		>>>obj = RestaurantLocation.objects.get(pk=1)
+		>>>obj.pk
+				= 1
+		if we give pk = 12200 which we do no have it will give DoesNotExist error
+
+		so lets use - get_object_or_404 to handle such exception
+		>>>from django.shortcuts import render, get_object_or_404
+		>>>obj = get_object_or_404(RestaurantLocation, pk=12222)
+			gives = django.http.response.Http404: No RestaurantLocation matches the given query.
+
+		same with slugs
+		>>>obj = get_object_or_404(RestaurantLocation, slug='mr-bake-cafe')
+		>>> obj
+				= <RestaurantLocation: Mr. Bake Cafe>
+
+		the UI has this feature inbuilt in views -- try : http://127.0.0.1:8000/restaurants/mr-bake-cafe1/
+
+		USING TRY CATCH for obj = get_object_or_404(RestaurantLocation, pk=12222)
+		//Mind the Indentation
+		>>>try:
+		...		obj = get_object_or_404(RestaurantLocation, pk=12222)
+		...	except:
+		... 	print("Not Found")
+
+		To avoid these, we can use querysets
+		>>>qs = RestaurantLocation.objects.filter(pk=122222)
+		>>>qs
+			= <QuerySet []>
+		>>>qs.exists()
+			= False
+		>>>if qs.exixts():
+		...		obj = qs.first()  // or print(qs.first())
+
+		additional get filters
+		>>>obj = RestaurantLocation.objects.get(pk=1, name='xyz', ...etc)
+		
